@@ -20,14 +20,14 @@ return new class extends Migration
         });
 
         Schema::create('reservations', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('description')->nullable();
             $table->timestamps();
         });
 
         Schema::create('categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('unit', 20);
             $table->unsignedBigInteger('reservation_id');
@@ -36,7 +36,7 @@ return new class extends Migration
         });
 
         Schema::create('customers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('email');
             $table->string('address');
@@ -44,76 +44,79 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('imports', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('customers')->on('id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('users')->on('id');
-            $table->tinyInteger('status');
-            $table->timestamps();
-        });
-
-        Schema::create('import_details', function (Blueprint $table) {
-            $table->unsignedBigInteger('import_id');
-            $table->foreign('import_id')->references('imports')->on('id');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('categories')->on('id');
-            $table->string('amount');
-        });
-
-        Schema::create('exports', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('customers')->on('id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('users')->on('id');
-            $table->tinyInteger('status');
-            $table->timestamps();
-        });
-
-        Schema::create('export_details', function (Blueprint $table) {
-            $table->unsignedBigInteger('export_id');
-            $table->foreign('export_id')->references('exports')->on('id');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('categories')->on('id');
-            $table->string('amount');
-        });
-
         Schema::create('shelves', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('description');
             $table->timestamps();
         });
 
         Schema::create('blocks', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('description');
             $table->timestamps();
         });
 
         Schema::create('positions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('block_id');
-            $table->foreign('block_id')->references('blocks')->on('id');
-            $table->unsignedBigInteger('shelf_id')->nullable();
-            $table->foreign('shelf_id')->references('shelfs')->on('id');
+            $table->foreign('block_id')->references('id')->on('blocks');
+            $table->unsignedBigInteger('shelf_id');
+            $table->foreign('shelf_id')->references('id')->on('shelves');
             $table->unique(['block_id', 'shelf_id']);
             $table->timestamps();
         });
 
-        Schema::create('goods', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('imports', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->tinyInteger('status');
+            $table->timestamps();
+        });
+
+        Schema::create('import_details', function (Blueprint $table) {
             $table->unsignedBigInteger('import_id');
-            $table->foreign('import_id')->references('imports')->on('id');
-            $table->unsignedBigInteger('export_id')->nullable();
-            $table->foreign('export_id')->references('exports')->on('id');
+            $table->foreign('import_id')->references('id')->on('imports');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('categories')->on('id');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->string('amount');
+            $table->primary(['import_id', 'category_id']);
+        });
+
+        Schema::create('exports', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->tinyInteger('status');
+            $table->timestamps();
+        });
+
+        Schema::create('export_details', function (Blueprint $table) {
+            $table->unsignedBigInteger('export_id');
+            $table->foreign('export_id')->references('id')->on('exports');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->string('amount');
+            $table->primary(['export_id', 'category_id']);
+        });
+
+
+        Schema::create('goods', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('import_id');
+            $table->foreign('import_id')->references('id')->on('imports');
+            $table->unsignedBigInteger('export_id')->nullable();
+            $table->foreign('export_id')->references('id')->on('exports');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedBigInteger('position_id');
-            $table->foreign('position_id')->references('positions')->on('id');
+            $table->foreign('position_id')->references('id')->on('positions');
             $table->date('expiry_date');
         });
     }
