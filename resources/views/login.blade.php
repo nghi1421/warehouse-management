@@ -49,6 +49,9 @@
                       </div>
                     </div>
 
+                    <button>
+                      Sign up
+                    </button>
                     <div>
                       <x-bewama::form.button.primary type="submit"> 
                          <svg class="-ml-0.5 h-5 w-5" viewBox="0 0 20 20" fill="white" aria-hidden="true">

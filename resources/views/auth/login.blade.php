@@ -10,13 +10,14 @@
                 <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
                 <p class="mt-2 text-sm leading-6 text-gray-500">
                   Not a member?
-                  <a href="#" class="font-semibold text-primary hover:text-primary-700 hover:underline">Sign-up</a>
+                  <a href="{{ route('register') }}" class="font-semibold text-primary hover:text-primary-700 hover:underline">Sign-up</a>
                 </p>
               </div>
 
               <div class="mt-10">
                 <div>
                   <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                    @csrf
                     <div>
                       <label for="email" class="block  text-sm font-medium leading-6 text-gray-900">Email address</label>
                       <div class="mt-2">
@@ -46,7 +47,7 @@
                          <svg class="-ml-0.5 h-5 w-5" viewBox="0 0 20 20" fill="white" aria-hidden="true">
                           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                         </svg>
-                        Sign up
+                        Sign in
                     </x-bewama::form.button.primary>
                     </div>
                   </form>
