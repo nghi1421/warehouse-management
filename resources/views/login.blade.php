@@ -53,12 +53,15 @@
                       Sign up
                     </button>
                     <div>
-                      <x-bewama::form.button.primary type="submit"> 
+                      <button type="submit">>
+                          Sign up
+                      </button>
+                      {{-- <x-bewama::form.button.primary type="submit"> 
                          <svg class="-ml-0.5 h-5 w-5" viewBox="0 0 20 20" fill="white" aria-hidden="true">
                           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                         </svg>
                         Sign up
-                    </x-bewama::form.button.primary>
+                    </x-bewama::form.button.primary> --}}
                     </div>
                   </form>
                 </div>
@@ -66,9 +69,9 @@
               </div>
             </div>
           </div>
-          <div class="relative hidden w-0  flex-1 lg:block">
+          {{-- <div class="relative hidden w-0  flex-1 lg:block">
             <img class="absolute inset-0 h-full w-full object-cover" src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80" alt="">
-          </div>
+          </div> --}}
         </div>
     </body>
 </html>
