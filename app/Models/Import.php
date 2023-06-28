@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use PhpParser\Node\Expr\Cast\Array_;
 
 class Import extends Model
 {
@@ -21,7 +20,7 @@ class Import extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsToUser(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function customer(): BelongsTo
@@ -31,16 +30,16 @@ class Import extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'import_details');
+        return $this->belongsToMany(Category::class, 'import_details')->withPivot('amount');
     }
 
     public function information(): Attribute
     {
         return Attribute::make(
-            get: function (): Array {
-                $user = $this->user();
+            get: function (): array {
+                $user = $this->user;
 
-                $customer = $this->customer();
+                $customer = $this->customer;
 
                 return [
                     'user_name' => $user->name,
@@ -54,6 +53,11 @@ class Import extends Model
                     'status' => $this->status,
                 ];
             }
-        )
+        );
+    }
+
+    public function getUserName(): string
+    {
+        return $this->user->name;
     }
 }

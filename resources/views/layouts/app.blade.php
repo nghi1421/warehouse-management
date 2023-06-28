@@ -71,9 +71,9 @@
 
                 <x-app.header />
 
-                <main>
+                <div id="app">
                     {{ $slot }}
-                </main>
+                </div>
 
             </div>
 
