@@ -7,6 +7,39 @@
         <form action="{{ route('imports.update', $import->id) }}" method="POST" class="space-y-6">
             @csrf
             <label for="id" class="block  text-sm font-semibold leading-6 uppercase text-slate-700">Import id: {{ $import->id }}</label>
+            <div class="flex">
+                <div class="flex-auto me-2">
+                    <label 
+                        for="created_at"  
+                        class="block ms-1 font-semibold text-xs leading-6 uppercase text-slate-600"
+                    >
+                        Created at
+                    </label>
+
+                    <input 
+                        type="datetime" 
+                        name="created_at" 
+                        value="{{ $import->created_at }}" 
+                        class="p-2 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
+                    />
+                </div>
+                <div class="flex-auto ms-2">
+                    <label 
+                        for="created_at"  
+                        class="block ms-1 font-semibold text-xs leading-6 uppercase text-slate-600"
+                    >
+                        Updated at
+                    </label>
+
+                    <input 
+                        type="datetime" 
+                        name="created_at" 
+                        value="{{ $import->updated_at }}" 
+                        class="p-2 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6"
+                    />
+                </div>
+            </div>
+            
             <div class="grid gap-4 grid-cols-6">
                 <div class="col-span-3 grid grid-cols-3 gap-2 bg-white p-4 pb-6 rounded-lg shadow-lg border-slate-500">
                     <div class="col-span-3 border-b-slate-400 border-b pb-2">
@@ -14,10 +47,28 @@
                             user information
                         </p>
                     </div>
+                    <div class="col-span-3 relative">
+                        <svg class="absolute inset-y-0 right-0 me-2 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <x-bewama::form.input.text id="search-user" name="search-user" type="text" placeholder="Search user"/>
+                    </div>
+
+                    <div 
+                        style="display: none;"
+                        id="result-user" 
+                        class="fixed w-[50%] bg-white mt-20 p-2 border-2 rounded-lg overflow-auto h-[40%]  panel col-span-3 panel-default z-50"
+                    >
+                        <table class="divide-y divide-gray-300 min-w-full">
+                            <tbody class="list-group-user" id="memListUsers">
+
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="col-span-1">
-                        <label for="user_id" class="block font-semibold text-xs leading-6 uppercase text-slate-600">User id</label>
+                        <label for="user_id"  class="block font-semibold text-xs leading-6 uppercase text-slate-600">User id</label>
                         <div class="mt-2">
-                            <x-bewama::form.input.text name="user_id" type="text" placeholder="Please fill user id" value="{{ $import->user_id }}"></x-bewama::form.input.text>
+                            <x-bewama::form.input.text name="user_id" type="text" disabled class="bg-slate-100" placeholder="Please fill user id" value="{{ $import->user_id }}"></x-bewama::form.input.text>
                         </div>
                     </div>
 
@@ -56,10 +107,30 @@
                             Customer information
                         </p>
                     </div>
+
+                    <div class="col-span-3 relative">
+                        <svg class="absolute inset-y-0 right-0 me-2 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                        </svg>
+                        <x-bewama::form.input.text id="search-customer" name="search-customer" type="text" placeholder="Search customer"/>
+                    </div>
+
+                    <div 
+                        style="display: none;"
+                        id="result-customer" 
+                        class="fixed w-[40%] bg-white mt-20 p-2 border-2 rounded-lg overflow-auto h-[40%]  panel col-span-3 panel-default z-50"
+                    >
+                        <table class="divide-y divide-gray-300 min-w-full">
+                            <tbody class="list-group-customer" id="memListCustomers">
+
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div class="col-span-1">
                         <label for="user_id" class="block font-semibold text-xs leading-6 uppercase text-slate-600">Cusomter id</label>
                         <div class="mt-2">
-                            <x-bewama::form.input.text name="customer_id" type="text" placeholder="Please fill customer id" value="{{ $import->customer_id }}"></x-bewama::form.input.text>
+                            <x-bewama::form.input.text name="customer_id" type="text" disabled class="bg-slate-100" placeholder="Please fill customer id" value="{{ $import->customer_id }}"></x-bewama::form.input.text>
                         </div>
                     </div>
 

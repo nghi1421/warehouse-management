@@ -2,8 +2,7 @@
 
 namespace App\Tables;
 
-use App\Models\Category;
-use App\Models\User;
+use App\Models\Reservation;
 use App\Tables\Actions\DeleteAction;
 use App\Tables\Actions\LinkAction;
 use App\Tables\Columns\ActionColumn;
@@ -12,18 +11,18 @@ use App\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class CategoryTable extends Table
+class ReservationTable extends Table
 {
-    protected string|null $heading = 'Categories list';
+    protected string|null $heading = 'Reservation list';
 
-    protected string|null $description = 'List of all of category';
+    protected string|null $description = '';
 
     public function selectedColumns(): array
     {
         return [
             'id',
             'name',
-            'unit',
+            'description',
             'created_at',
             'updated_at',
         ];
@@ -31,17 +30,23 @@ class CategoryTable extends Table
 
     protected function query(): Builder|HasMany
     {
-        return Category::query()->select($this->selectedColumns());
+        $queryBuilder = Reservation::query();
+
+        if ($categoryId = $this->request->route('categories.show')) {
+
+            $queryBuilder->where('category_id', $categoryId);
+        }
+        return $queryBuilder->select($this->selectedColumns());
     }
 
     protected function addRoute(): string
     {
-        return route('categories.create');
+        return route('reservations.create');
     }
 
     protected function addLabel(): string
     {
-        return __('Add new category');
+        return __('Add new reservation');
     }
 
     protected function columns(): array
@@ -50,9 +55,9 @@ class CategoryTable extends Table
             TextColumn::make('id')
                 ->label('Id'),
             TextColumn::make('name')
-                ->label('Name'),
-            TextColumn::make('unit')
-                ->label('Email'),
+                ->label('name'),
+            TextColumn::make('description')
+                ->label('description'),
             TextColumn::make('created_at')
                 ->label('Created at'),
             TextColumn::make('updated_at')
@@ -62,9 +67,9 @@ class CategoryTable extends Table
                 ->actions(
                     LinkAction::make()
                         ->label('View')
-                        ->url(fn (Category $category): string => route('categories.show', $category)),
+                        ->url(fn (Reservation $reservation): string => route('reservations.show', $reservation)),
                     DeleteAction::make()
-                        ->url(fn (Category $category): string => route('categories.destroy', $category)),
+                        ->url(fn (Reservation $reservation): string => route('reservations.destroy', $reservation)),
                 ),
         ];
     }

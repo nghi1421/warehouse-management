@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Tables\CustomerTable;
+use App\Models\Category;
+use App\Tables\CategoryTable;
+use App\Tables\ReservationTable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index(CustomerTable $customerTable): View
+    public function index(CategoryTable $categoryTable): View
     {
-        return view('bewama::pages.dashboard.customer.index', compact('customerTable'));
+        return view('bewama::pages.dashboard.category.index', compact('categoryTable'));
     }
 
     public function create()
@@ -21,8 +23,12 @@ class CategoryController extends Controller
     {
     }
 
-    public function show(string $id)
+    public function show(Category $category, ReservationTable $reservationTable)
     {
+        return view(
+            'bewama::pages.dashboard.category.show',
+            compact('reservationTable', 'category')
+        );
     }
 
     public function edit(string $id)

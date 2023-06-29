@@ -1,22 +1,16 @@
 <?php
 
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Customers\CustomerController;
+use App\Http\Controllers\Customers\SearchCustomerController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Users\UserController;
+use App\Http\Controllers\Users\SearchUserController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,10 +34,20 @@ Route::prefix('dashboard')->group(function () {
 
         Route::resource('users', UserController::class);
 
+        Route::get('users/search', [SearchCustomerController::class, '__invoke'])
+            ->name('users.search');
+
         Route::resource('customers', CustomerController::class);
+
+        Route::get('customers/search', [SearchUserController::class, '__invoke'])
+            ->name('customers.search');
 
         Route::resource('imports', ImportController::class);
 
         Route::resource('exports', ExportController::class);
+
+        Route::resource('categories', CategoryController::class);
+
+        Route::resource('reservations', ReservationController::class);
     });
 });
