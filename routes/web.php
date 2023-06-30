@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\BlockController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\SearchUserController;
@@ -49,5 +50,6 @@ Route::prefix('dashboard')->group(function () {
         Route::resource('categories', CategoryController::class);
 
         Route::resource('reservations', ReservationController::class);
+        Route::resource('blocks', BlockController::class);
     });
 });
