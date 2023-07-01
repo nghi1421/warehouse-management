@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laratrust\Contracts\LaratrustUser;
@@ -49,6 +50,7 @@ class User extends Authenticatable implements LaratrustUser
      * @var array<string, string>
      */
     protected $casts = [
+        'working' => 'boolean',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
@@ -63,8 +65,8 @@ class User extends Authenticatable implements LaratrustUser
         return $this->hasMany(Export::class);
     }
 
-    public function role(): BelongsTo
+    public function role(): BelongsToMany
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class, 'role_user');
     }
 }

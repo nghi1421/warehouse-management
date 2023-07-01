@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="col-span-1">
-                        <label class="block font-semibold  text-xs leading-6 uppercase text-slate-600">User email</label>
+                        <label class="block font-semibold  text-xs leading-6 uppercase text-slate-600">Date of birth</label>
                         <div class="mt-2">
                             <input type="datetime" disabled value="{{ $user->dob }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
