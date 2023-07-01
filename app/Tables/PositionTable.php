@@ -3,7 +3,7 @@
 namespace App\Tables;
 
 use App\Models\Category;
-use App\Models\Block;
+use App\Models\Position;
 use App\Tables\Actions\DeleteAction;
 use App\Tables\Actions\LinkAction;
 use App\Tables\Columns\ActionColumn;
@@ -12,18 +12,19 @@ use App\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class BlockTable extends Table
+class PositionTable extends Table
 {
-    protected string|null $heading = 'Block list';
+    protected string|null $heading = 'Position list';
 
-    protected string|null $description = 'List of all of block';
+    protected string|null $description = 'List of all of position';
 
     public function selectedColumns(): array
     {
         return [
             'id',
-            'name',
+            'shelf_name',
             'description',
+            'block_name',
             'created_at',
             'updated_at',
         ];
@@ -31,17 +32,18 @@ class BlockTable extends Table
 
     protected function query(): Builder|HasMany
     {
-        return Block::query()->select($this->selectedColumns());
+        return Position::query()
+            ->withCount('goods');
     }
 
     protected function addRoute(): string
     {
-        return route('blocks.create');
+        return route('positions.create');
     }
 
     protected function addLabel(): string
     {
-        return __('Add new block');
+        return __('Add new position');
     }
 
     protected function columns(): array
@@ -49,10 +51,14 @@ class BlockTable extends Table
         return [
             TextColumn::make('id')
                 ->label('Id'),
-            TextColumn::make('name')
-                ->label('Name'),
+            TextColumn::make('block_name')
+                ->label('Block'),
+            TextColumn::make('shelf_name')
+                ->label('Shelf'),
             TextColumn::make('description')
                 ->label('Description'),
+            TextColumn::make('goods_count')
+                ->label('Number of goods'),
             TextColumn::make('created_at')
                 ->label('Created at'),
             TextColumn::make('updated_at')
@@ -62,9 +68,9 @@ class BlockTable extends Table
                 ->actions(
                     LinkAction::make()
                         ->label('View')
-                        ->url(fn (Category $category): string => route('blocks.show', $category)),
+                        ->url(fn (Position $postion): string => route('positions.show', $postion)),
                     DeleteAction::make()
-                        ->url(fn (Category $category): string => route('blocks.destroy', $category)),
+                        ->url(fn (Position $postion): string => route('positions.destroy', $postion)),
                 ),
         ];
     }

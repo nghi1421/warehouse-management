@@ -5,11 +5,22 @@ namespace App\Http\Controllers\Customers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 
 class SearchCustomerController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): View|JsonResponse
     {
+        $request->validate([
+            'customer_id' => ['sometimes', 'integer', 'min:0'],
+            'search' => ['sometimes', 'string']
+        ]);
+
+        if ($customerId = $request->input('customer_id')) {
+            return new JsonResponse(Customer::query()->find($customerId));
+        }
+
         $searchTerm = $request->input('search');
 
         $customers = Customer::query()
@@ -20,6 +31,6 @@ class SearchCustomerController extends Controller
             ->orWhere('phone_number', 'like', "%{$searchTerm}%")
             ->get();
 
-        return view('bewama::pages.dashboard.customer.search', compact('customers'));
+        return view('bewama::pages.dashboard.customer.result', compact('customers'));
     }
 }

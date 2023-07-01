@@ -32,6 +32,10 @@ abstract class Column
 
     public function render(Model $model): HtmlString|string|null
     {
+        if ($this->sub && !$model->getAttribute($this->attribute)) {
+            return '___';
+        }
+
         return $this->sub ? $model->getAttribute($this->attribute)[$this->sub] :
             $model->getAttribute($this->attribute);
     }

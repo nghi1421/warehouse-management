@@ -8,7 +8,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\BlockController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\GoodsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\SearchUserController;
@@ -35,13 +36,11 @@ Route::prefix('dashboard')->group(function () {
 
         Route::resource('users', UserController::class);
 
-        Route::get('users/search', [SearchCustomerController::class, '__invoke'])
-            ->name('users.search');
+        Route::get('search-user', [SearchUserController::class, '__invoke']);
 
         Route::resource('customers', CustomerController::class);
 
-        Route::get('customers/search', [SearchUserController::class, '__invoke'])
-            ->name('customers.search');
+        Route::get('search-customer', [SearchCustomerController::class, '__invoke']);
 
         Route::resource('imports', ImportController::class);
 
@@ -50,6 +49,9 @@ Route::prefix('dashboard')->group(function () {
         Route::resource('categories', CategoryController::class);
 
         Route::resource('reservations', ReservationController::class);
-        Route::resource('blocks', BlockController::class);
+
+        Route::resource('positions', PositionController::class);
+
+        Route::resource('goods', GoodsController::class);
     });
 });

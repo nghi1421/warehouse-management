@@ -4,7 +4,8 @@
             <h1 class="text-xl text-black uppercase font-bold">Import detail</h1>
         </div>
 
-        <form action="{{ route('imports.update',$import) }}" method="PUT" class="space-y-6">
+        <form action="{{ route('imports.update',$import) }}" method="POST" class="space-y-6">
+            @method('PUT')
             @csrf
             <label for="id" class="block  text-sm font-semibold leading-6 uppercase text-slate-700">Import id: {{ $import->id }}</label>
             <div class="flex">
@@ -31,16 +32,16 @@
                             user information
                         </p>
                     </div>
-                    <div class="col-span-3 relative">
+                    <div class="col-span-3 relative focus:fixed focus:-mt-2 focus:w-[40%] z-50">
                         <svg class="absolute inset-y-0 right-0 me-2 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
                         </svg>
                         <x-bewama::form.input.text id="search-user" name="search-user" type="text" placeholder="Search user" />
                     </div>
 
-                    <div style="display: none;" id="result-user" class="fixed w-[50%] bg-white mt-20 p-2 border-2 rounded-lg overflow-auto h-[40%]  panel col-span-3 panel-default z-50">
+                    <div style="display: none;" id="result-user" class="fixed bg-white mt-20 p-2 border-2 rounded-lg overflow-auto panel col-span-3 panel-default z-50">
                         <table class="divide-y divide-gray-300 min-w-full">
-                            <tbody class="list-group-user" id="memListUsers">
+                            <tbody id="memListUsers" class="table-body bg-white divide-y divide-gray-200">
 
                             </tbody>
                         </table>
@@ -55,28 +56,28 @@
                     <div class="col-span-2">
                         <label class="block font-semibold text-xs leading-6 uppercase text-slate-600">Name</label>
                         <div class="mt-2">
-                            <input type="text" disabled value="{{ $user->name }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                            <input name="user_name" type="text" disabled value="{{ $user->name }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
                     <div class="col-span-2">
                         <label class="block font-semibold text-xs leading-6 uppercase text-slate-600">Email</label>
                         <div class="mt-2">
-                            <input type="text" disabled value="{{ $user->email }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                            <input name="user_email" type="text" disabled value="{{ $user->email }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
                     <div class="col-span-1">
                         <label class="block font-semibold  text-xs leading-6 uppercase text-slate-600">Date of birth</label>
                         <div class="mt-2">
-                            <input type="datetime" disabled value="{{ $user->dob }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                            <input name="user_dob" type="datetime" disabled value="{{ $user->dob }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
                     <div class="col-span-3">
                         <label class="block font-semibold  text-xs leading-6 uppercase text-slate-600">Address</label>
                         <div class="mt-2">
-                            <input type="text" disabled value="{{ $user->address }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                            <input name="user_address" type="text" disabled value="{{ $user->address }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
                 </div>
@@ -88,16 +89,16 @@
                         </p>
                     </div>
 
-                    <div class="col-span-3 relative">
+                    <div class="col-span-3 relative focus:fixed focus:-mt-2 focus:w-[40%] z-50">
                         <svg class="absolute inset-y-0 right-0 me-2 h-full w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
                         </svg>
                         <x-bewama::form.input.text id="search-customer" name="search-customer" type="text" placeholder="Search customer" />
                     </div>
 
-                    <div style="display: none;" id="result-customer" class="fixed w-[40%] bg-white mt-20 p-2 border-2 rounded-lg overflow-auto h-[40%]  panel col-span-3 panel-default z-50">
+                    <div style="display: none;" id="result-customer" class="fixed bg-white mt-20 p-2 border-2 rounded-lg overflow-auto panel col-span-3 panel-default z-50">
                         <table class="divide-y divide-gray-300 min-w-full">
-                            <tbody class="list-group-customer" id="memListCustomers">
+                            <tbody class="table-body bg-white divide-y divide-gray-200" id="memListCustomers">
 
                             </tbody>
                         </table>
@@ -113,28 +114,28 @@
                     <div class="col-span-2">
                         <label class="block font-semibold text-xs leading-6 uppercase text-slate-600">Name</label>
                         <div class="mt-2">
-                            <input type="text" disabled value="{{ $customer->name }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                            <input name="customer_name" type="text" disabled value="{{ $customer->name }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
                     <div class="col-span-2">
                         <label class="block font-semibold text-xs leading-6 uppercase text-slate-600">Email</label>
                         <div class="mt-2">
-                            <input type="text" disabled value="{{ $customer->email }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                            <input name="customer_email" type="text" disabled value="{{ $customer->email }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
                     <div class="col-span-1">
                         <label class="block font-semibold  text-xs leading-6 uppercase text-slate-600">Phone number</label>
                         <div class="mt-2">
-                            <input type="text" disabled value="{{ $customer->phone_number }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                            <input  name="customer_phone_number" type="text" disabled value="{{ $customer->phone_number }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
 
                     <div class="col-span-3">
                         <label class="block font-semibold  text-xs leading-6 uppercase text-slate-600">Address</label>
                         <div class="mt-2">
-                            <input type="datetime" disabled value="{{ $customer->address }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                            <input name="customer_address" type="datetime" disabled value="{{ $customer->address }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
                 </div>
@@ -145,13 +146,7 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-3 uppercase py-3.5 text-left text-xs font-semibold text-gray-900">
-                                {{ __('category id') }}
-                            </th>
-                            <th scope="col" class="px-3 uppercase py-3.5 text-left text-xs font-semibold text-gray-900">
-                                {{ __('category name') }}
-                            </th>
-                            <th scope="col" class="px-3 uppercase py-3.5 text-left text-xs font-semibold text-gray-900">
-                                {{ __('category unit') }}
+                                {{ __('category ') }}
                             </th>
                             <th scope="col" class="px-3 uppercase py-3.5 text-left text-xs font-semibold text-gray-900">
                                 {{ __('amount') }}
@@ -161,7 +156,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="table-body bg-white divide-y divide-gray-200">
+                    <tbody id="import-detail" class="table-body bg-white divide-y divide-gray-200">
                         @empty($importDetails)
                         <tr>
                             <td colspan="{{ 5 }}">
@@ -175,28 +170,33 @@
                         </tr>
                         @else
                         @foreach($importDetails as $index => $importDetail)
-                        <tr>
+                        <tr class="detail-row">
                             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                {{ $importDetail['category_id'] }}
-                                <input type="text" hidden name="import_details[{{ $index }}][category_id]" value="{{ $importDetail['category_id'] }}" />
+                                <select name="categories[]" class="form-control">
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" @if($category->getKey() === $importDetail['category_id']) selected @endif>
+                                        {{ $category->name }} ({{ $category->unit }})
+                                    </option>
+                                    @endforeach
+                                </select>
                             </td>
                             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-
-                                {{ $importDetail['catagory_name'] }}
-                            </td>
-                            <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                {{ $importDetail['category_unit'] }}
-                            </td>
-                            <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                <input name="import_details[{{ $index }}][amount]" type="number" min=1 value="{{ $importDetail['amount'] }}" class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
+                                <input name='amounts[]' type="number" required min=1 value={{ $importDetail['amount'] }} class="pl-2 bg-slate-100 outline-transparent block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6" />
                             </td>
                             <td>
                                 <span class="btn-delete hover:bg-red-400 hover:text-white inline-flex items-center rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700 cursor-pointer">{{ 'Delete' }}</span>
                             </td>
                         </tr>
                         @endforeach
-                        <tr>
-
+                        <tr class="detail-add">
+                            <td colspan="5">
+                                <button type="button" class="flex items-center justify-center w-full p-4 mx-0 btn-add-import-detail hover:text-slate-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 me-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Add new import detail
+                                </button>
+                            </td>
                         </tr>
                         @endempty
                     </tbody>
@@ -208,7 +208,7 @@
                     Return import table
                 </a>
                 <div class="mr-4">
-                    <button type="submit" class="bg-green-500 p-2 rounded-lg !text-white hover:bg-green-600">
+                    <button id="btnSaveChange" type="submit" class="bg-green-500 p-2 rounded-lg !text-white hover:bg-green-600">
                         Save changes
                     </button>
                 </div>

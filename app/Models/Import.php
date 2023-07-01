@@ -18,14 +18,28 @@ class Import extends Model
         'status',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($import) {
+            $categories = $import->categories;
+
+            if ($categories->isNotEmpty()) {
+
+                $import->categories()->detach();
+            }
+        });
+    }
+
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsto(User::class);
     }
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsto(Customer::class);
     }
 
     public function categories(): BelongsToMany

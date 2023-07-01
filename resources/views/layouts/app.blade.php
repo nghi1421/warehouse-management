@@ -1,23 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <link rel="icon" href="{{ asset('assets/images/bewama-logo.png') }}" type="image/x-icon"/>
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <title>Warehouse Management</title>
-    </head>
-    <body class="h-full">
-        
-        {{ $slot }}
-    
-    </body>
-</html>
- --}}
 
  <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -33,6 +13,11 @@
 
         <!-- Styles -->
         @livewireStyles
+        
+        <link rel="stylesheet" type="text/css" 
+            href="{{ asset('assets/css/toastr.css') }}">
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -78,8 +63,40 @@
             </div>
 
         </div>
-
         @livewireScripts
     </body>
 </html>
+<script>
+    @if(Session::has('message'))
+        console.log(123);
+        toastr.options =
+        {
+            "closeButton" : true,
+        }
+        toastr.success("{{ session('message') }}");
+    @endif
 
+    @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+        }
+        toastr.error("{{ session('error') }}");
+    @endif
+
+    @if(Session::has('info'))
+        toastr.options =
+        {
+            "closeButton" : true,
+        }
+        toastr.info("{{ session('info') }}");
+    @endif
+
+    @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton" : true,
+        }
+        toastr.warning("{{ session('warning') }}");
+    @endif
+</script>

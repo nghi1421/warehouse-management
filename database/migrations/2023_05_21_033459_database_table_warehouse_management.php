@@ -44,27 +44,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('shelves', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->timestamps();
-        });
-
-        Schema::create('blocks', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->timestamps();
-        });
-
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('block_id');
-            $table->foreign('block_id')->references('id')->on('blocks');
-            $table->unsignedBigInteger('shelf_id');
-            $table->foreign('shelf_id')->references('id')->on('shelves');
-            $table->unique(['block_id', 'shelf_id']);
+            $table->string('block_name', 50);
+            $table->string('shelf_name', 50);
+            $table->unique(['block_name', 'shelf_name']);
+            $table->text('description');
             $table->timestamps();
         });
 
@@ -83,7 +68,7 @@ return new class extends Migration
             $table->foreign('import_id')->references('id')->on('imports');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->string('amount');
+            $table->integer('amount');
             $table->primary(['import_id', 'category_id']);
         });
 
@@ -102,7 +87,7 @@ return new class extends Migration
             $table->foreign('export_id')->references('id')->on('exports');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->string('amount');
+            $table->integer('amount');
             $table->primary(['export_id', 'category_id']);
         });
 
@@ -115,9 +100,9 @@ return new class extends Migration
             $table->foreign('export_id')->references('id')->on('exports');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->unsignedBigInteger('position_id');
+            $table->unsignedBigInteger('position_id')->nullable();
             $table->foreign('position_id')->references('id')->on('positions');
-            $table->date('expiry_date');
+            $table->date('expiry_date')->nullable();
         });
     }
 

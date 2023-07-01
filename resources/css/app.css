@@ -5,7 +5,7 @@
 /* Additional styles */
 @import 'additional-styles/utility-patterns.css';
 @import 'additional-styles/flatpickr.css';
-
+@import "toastr";
 @import 'tailwindcss/utilities';
 
 /* See Alpine.js: https://github.com/alpinejs/alpine#x-cloak */
@@ -14,5 +14,7 @@
 }
 
 @media screen and (max-width: theme('screens.lg')) {
-    [x-cloak="lg"] { display: none; }
+    [x-cloak="lg"] {
+        display: none;
+    }
 }

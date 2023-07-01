@@ -2,7 +2,7 @@
 
 namespace App\Tables;
 
-use App\Models\User;
+use App\Models\Goods;
 use App\Tables\Actions\DeleteAction;
 use App\Tables\Actions\LinkAction;
 use App\Tables\Columns\ActionColumn;
@@ -11,7 +11,7 @@ use App\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class UserTable extends Table
+class GoodsTable extends Table
 {
     protected string|null $heading = 'Goods list';
 
@@ -21,27 +21,30 @@ class UserTable extends Table
     {
         return [
             'id',
-            'name',
-            'email',
-            'phone_number',
-            'dob',
-            'created_at',
+            'import_id',
+            'export_id',
+            'category_id',
+            'position_id',
         ];
     }
 
     protected function query(): Builder|HasMany
     {
-        return User::query()->select($this->selectedColumns());
+        return Goods::query()
+            ->with('import')
+            ->with('export')
+            ->with('category')
+            ->with('position');
     }
 
     protected function addRoute(): string
     {
-        return route('users.create');
+        return route('goods.create');
     }
 
     protected function addLabel(): string
     {
-        return __('Add new user');
+        return __('Add new goods');
     }
 
     protected function columns(): array
@@ -49,24 +52,29 @@ class UserTable extends Table
         return [
             TextColumn::make('id')
                 ->label('Id'),
-            TextColumn::make('name')
+            TextColumn::make('category')
+                ->withSub('name')
                 ->label('Name'),
-            TextColumn::make('email')
-                ->label('Email'),
-            TextColumn::make('phone_number')
-                ->label('Phone number'),
-            TextColumn::make('dob')
-                ->label('Date of birth'),
-            TextColumn::make('created_at')
-                ->label('Created at'),
+            TextColumn::make('import')
+                ->withSub('created_at')
+                ->label('Import date'),
+            TextColumn::make('export')
+                ->withSub('created_at')
+                ->label('Export date'),
+            TextColumn::make('position')
+                ->withSub('shelf_name')
+                ->label('Shelf'),
+            TextColumn::make('position')
+                ->withSub('block_name')
+                ->label('Block'),
             ActionColumn::make()
                 ->label('Action')
                 ->actions(
                     LinkAction::make()
                         ->label('View')
-                        ->url(fn (User $user): string => route('users.show', $user)),
+                        ->url(fn (Goods $goods): string => route('goods.show', $goods)),
                     DeleteAction::make()
-                        ->url(fn (User $user): string => route('users.destroy', $user)),
+                        ->url(fn (Goods $goods): string => route('goods.destroy', $goods)),
                 ),
         ];
     }

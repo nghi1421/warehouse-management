@@ -5,39 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Position extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'block_id',
-        'shelf_id',
+        'description',
+        'shelf_name',
+        'block_name',
     ];
 
-    public function block(): BelongsTo
+    public function goods(): HasMany
     {
-        return $this->belongsTo(Block::class);
+        return $this->hasMany(Goods::class);
     }
 
-    public function shelf(): BelongsTo
-    {
-        return $this->belongsTo(Shelf::class);
-    }
-
-    public function information(): Attribute
+    public function numberOfGoods(): Attribute
     {
         return Attribute::make(
             get: function (): array {
-                $block = $this->block();
-
-                $shelf = $this->shelf();
-
-                return [
-                    'block_name' => $block->name,
-                    'shlef_name' => $shelf->name,
-                ];
+                return $this->withCount('goods');
             }
         );
     }
